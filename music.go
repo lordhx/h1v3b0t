@@ -52,12 +52,12 @@ func handleAdd(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 		if video.Length_seconds > 60*6 {
 			s.ChannelMessageSend(m.ChannelID, fmt.Sprintf(
-				"Продолжительность видео %d:%d - предупреждение!!!",
-				video.Length_seconds/60, video.Length_seconds%60))
+				"Продолжительность трека %s %d:%d - предупреждение!!!",
+				video.Title, video.Length_seconds/60, video.Length_seconds%60))
 		} else {
 			s.ChannelMessageSend(m.ChannelID, fmt.Sprintf(
-				"Продолжительность видео %d:%d - все ок ;)",
-				video.Length_seconds/60, video.Length_seconds%60))
+				"Продолжительность трека %s %d:%d - продолжай в том же духе...",
+				video.Title, video.Length_seconds/60, video.Length_seconds%60))
 		}
 	}
 }
