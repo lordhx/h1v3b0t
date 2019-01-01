@@ -50,13 +50,19 @@ func handleAdd(s *discordgo.Session, m *discordgo.MessageCreate) {
 			return
 		}
 
-		if video.Length_seconds > 60*6 {
+		if video.Length_seconds > 60*8 {
 			s.ChannelMessageSend(m.ChannelID, fmt.Sprintf(
-				"Продолжительность трека %s %d:%d - предупреждение!!!",
+				"%s %d:%02d - предупреждение!!!",
 				video.Title, video.Length_seconds/60, video.Length_seconds%60))
+
+			// notify Tosori
+			s.ChannelMessageSend("529035794145607681", fmt.Sprintf(
+				"Продолжительность трека %s %d:%02d by @%s",
+				video.Title, video.Length_seconds/60, video.Length_seconds%60, m.Author.Username))
+
 		} else {
 			s.ChannelMessageSend(m.ChannelID, fmt.Sprintf(
-				"Продолжительность трека %s %d:%d - продолжай в том же духе...",
+				"%s %d:%02d - продолжай в том же духе...",
 				video.Title, video.Length_seconds/60, video.Length_seconds%60))
 		}
 	}
