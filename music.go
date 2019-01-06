@@ -34,12 +34,13 @@ func handleAdd(s *discordgo.Session, m *discordgo.MessageCreate) {
 		return
 	}
 
-	pattern := regexp.MustCompile(`^!add (https:\/\/www\.youtube\.com\/watch\?v=)?(\S{3,})$`)
+	pattern := regexp.MustCompile(`^!add (https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)?(\S{3,})$`)
 
 	matched := pattern.FindStringSubmatch(m.Content)
 	if matched != nil {
-		fmt.Printf("processing %s\n", matched[2])
-		video, err := getVideo(matched[2])
+		videoId := matched[len(matched)-1]
+		fmt.Printf("processing %s\n", videoId)
+		video, err := getVideo(videoId)
 
 		if err != nil {
 			fmt.Println("error during processing video,", err)
